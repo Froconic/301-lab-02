@@ -1,18 +1,3 @@
-table, input 
-        {
-            width: 300px;
-            font: 17px Calibri;
-        }
-        table, th, td 
-        {
-            border: solid 1px #DDD;
-            border-collapse: collapse;
-            padding: 2px 3px;
-            text-align: center;
-        }
-        table img 
-        {
-            border: none;
-            width: 51px;
-            height: 51px;
-        }
+h:first-letter {
+    
+}
