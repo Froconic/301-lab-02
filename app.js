@@ -13,10 +13,10 @@ function Image(json) {
   this.element.append(`<img id=${this.title}-image src=${this.url}></img>`);
   this.element.append(`<p class='description'>${this.description}</p>`);
 
-  function grabElement() {
+  this.grabElement = function () {
     return this.element;
     console.log(this.element);
-  }
+  };
 }
 
 $(document).ready(() => {
@@ -25,16 +25,20 @@ $(document).ready(() => {
 
   function render() {
     let keyword = $('#keywords').val();
+    console.log('keyword id targeted');
     $main.empty();
     console.log('element emptied');
-    for (const img of images) {
-      console.log(keyword);
-      if (keyword !== 'default' && img.keyword === keyword) {
-        $main.append(img.grabElement());
-      } else {
-        $main.append(img.grabElement());
+    $.get('data/page-1.json', (images) => {
+      for (const img of images) {
+        console.log(keyword);
+        if (keyword !== 'default' && img.keyword === keyword) {
+          $main.append(img.grabElement);
+        } else {
+          $main.append(img.grabElement);
+        }
       }
-    }
+    });
+
   }
 
   render();
