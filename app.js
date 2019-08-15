@@ -40,9 +40,12 @@ $(document).ready(() => {
 
     // renders images to page
     $info.forEach(function(object) {
-      console.log('rendering images');
       render(object);
     });
+    console.table(images);
+    images.forEach(function (object) {
+      createList(images);
+    })
   });
   // }
 
@@ -55,6 +58,10 @@ $(document).ready(() => {
     let $horns = $('<p></p>').text(`# of horns: ${object.horns}`);
     $imageSection.append($title, $image, $horns);
     $('main').append($imageSection);
+  }
 
+  function createList(object) {
+    let $option = $('<option></option>').text(object.keyword).val(object.keyword);
+    $('select').append($option);
   }
 });
