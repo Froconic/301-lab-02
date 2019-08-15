@@ -1,24 +1,15 @@
+* {
+  box-sizing: border-box;
+}
 
-    #h::first-letter {
-        font-size: 200%;
-        color: hotpink;
-      }
+body {
+  background-color: rgb(121, 139, 125);
+}
 
-      #s {
-          font-size: 100%;
-          color: black;
-      }
+header {
+  padding: 15px;
+}
 
-      h1 {
-          background-color: white;
-          color: black;
-          font-size: 111px;
-      }
-
-      #horn2 {
-          background-color: blue;
-      }
-
-      #horn {
-        transform: scaleX(-1);
-      }
+select {
+  font-size: 1.74rem;
+}
