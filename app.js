@@ -2,13 +2,14 @@
 
 
 const images = [];
+let keywords = [];
 
 //ensures the program runs after page loads
 $(document).ready(() => {
 
   // globals to contain the necessary json information
 
-  let keywords = [];
+
 
   // constructor function to create the objects inide the json file
   function Image(image_url, title, description, keyword, horns) {
@@ -31,27 +32,31 @@ $(document).ready(() => {
   }
 
   // function to create objects from json data and push to images array
-  // function addImages() {
   $.get('./data/page-1.json', info => {
     let $info = info;
     $info.forEach(function(object) {
       images.push(new Image(object.image_url, object.title, object.description, object.keyword, object.horns));
+
+      keywords.push(object.keyword);
     });
 
     // renders images to page
     $info.forEach(function(object) {
       render(object);
     });
-    console.table(images);
-    images.forEach(function (object) {
-      createList(images);
-    })
+
+    //filters keyword list
+    keywords = new Set(keywords);
+    //renders list
+    keywords.forEach(function (keywords) {
+      createList(keywords);
+    });
+
+    $('#keywords').change(hideStuff);
   });
-  // }
 
   // function to generate the necessary tags and add images to page
   function render(object) {
-    // addImages();
     let $imageSection = $('<section></section>').attr('data-keyword', object.keyword);
     let $title = $('<h2></h2>').text(object.title);
     let $image = $('<img>').attr({ src: object.image_url, alt: object.description });
@@ -60,8 +65,21 @@ $(document).ready(() => {
     $('main').append($imageSection);
   }
 
-  function createList(object) {
-    let $option = $('<option></option>').text(object.keyword).val(object.keyword);
-    $('select').append($option);
+  // Creates the list of options for filtering
+  function createList(keywords) {
+    let $option = $('<option></option>').text(keywords).val(keywords);
+    $('#keywords').append($option);
+  }
+
+  // function to hide images
+  function hideStuff() {
+    let value = $(this).val();
+
+    if (value !== 'default') {
+      $('section').hide();
+      $(`section[data-keyword=${value}]`).show();
+    } else {
+      $('section').show();
+    }
   }
 });
