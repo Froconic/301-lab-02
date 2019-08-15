@@ -35,8 +35,9 @@ $(document).ready(() => {
   $.get('./data/page-1.json', info => {
     let $info = info;
     $info.forEach(function(object) {
-      images.push(new Image(object.image_url, object.title, object.description, object.keyword, object.horns);
-      keywords.push(object.keyword));
+      images.push(new Image(object.image_url, object.title, object.description, object.keyword, object.horns));
+
+      keywords.push(object.keyword);
     });
 
     // renders images to page
@@ -46,13 +47,13 @@ $(document).ready(() => {
 
     //filters keyword list
     keywords = new Set(keywords);
-    console.log(keywords);
     //renders list
     keywords.forEach(function (keywords) {
       createList(keywords);
-    })
+    });
+
+    $('#keywords').change(hideStuff);
   });
-  // }
 
   // function to generate the necessary tags and add images to page
   function render(object) {
@@ -67,6 +68,18 @@ $(document).ready(() => {
   // Creates the list of options for filtering
   function createList(keywords) {
     let $option = $('<option></option>').text(keywords).val(keywords);
-    $('select').append($option);
+    $('#keywords').append($option);
+  }
+
+  // function to hide images
+  function hideStuff() {
+    let value = $(this).val();
+
+    if (value !== 'default') {
+      $('section').hide();
+      $(`section[data-keyword=${value}]`).show();
+    } else {
+      $('section').show();
+    }
   }
 });
