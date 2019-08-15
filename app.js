@@ -11,8 +11,8 @@ $(document).ready(() => {
   let keywords = [];
 
   // constructor function to create the objects inide the json file
-  function Image(imageUrl, title, description, keyword, horns) {
-    this.imageUrl = imageUrl;
+  function Image(image_url, title, description, keyword, horns) {
+    this.image_url = image_url;
     this.title = title;
     this.description = description;
     this.keyword = keyword;
@@ -30,46 +30,31 @@ $(document).ready(() => {
     };
   }
 
-  function addImages() {
-    $.get('./data/page-1.json', info => {
-      let $info = info;
-      $info.forEach(function (element) {
-          images.push(new Image(element.image_url, element.title, element.description, element.keyword, element.horns));
-          console.table(images);
-        });
+  // function to create objects from json data and push to images array
+  // function addImages() {
+  $.get('./data/page-1.json', info => {
+    let $info = info;
+    $info.forEach(function(object) {
+      images.push(new Image(object.image_url, object.title, object.description, object.keyword, object.horns));
     });
-  }
 
-  function render() {
+    // renders images to page
+    $info.forEach(function(object) {
+      console.log('rendering images');
+      render(object);
+    });
+  });
+  // }
+
+  // function to generate the necessary tags and add images to page
+  function render(object) {
+    // addImages();
+    let $imageSection = $('<section></section>').attr('data-keyword', object.keyword);
+    let $title = $('<h2></h2>').text(object.title);
+    let $image = $('<img>').attr({ src: object.image_url, alt: object.description });
+    let $horns = $('<p></p>').text(`# of horns: ${object.horns}`);
+    $imageSection.append($title, $image, $horns);
+    $('main').append($imageSection);
 
   }
 });
-
-
-
-
-
-//
-//
-//   function render() {
-//     addImages();
-//     console.log(images);
-//     let $keyword = $('#keywords');
-//     $main.empty();
-//     $.get('./data/page-1.json', images => {
-//       for (const img of images) {
-//         if (keyword !== 'default' && img.keyword === keyword) {
-//           console.log('in if statement');
-//           $main.append(img.grabElement);
-//         } else {
-//           console.log('in else statement');
-//           $main.append(img.grabElement);
-//         }
-//       }
-//     });
-//
-//   }
-//
-//   render();
-//
-// });
